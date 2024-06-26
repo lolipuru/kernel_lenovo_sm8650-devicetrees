@@ -16,7 +16,13 @@ dtbo-y += kalama-audio.dtbo \
 endif
 
 ifeq ($(CONFIG_ARCH_PINEAPPLE), y)
-dtbo-y += pineapple-audio.dtbo \
+dtbo-y += pineapple-audio.dtbo
+endif
+
+ifeq ($(CONFIG_TARGET_PRODUCT_KIRBY),y)
+dtbo-y += kirby-audio-qrd.dtbo
+else
+dtbo-y += \
                  pineapple-audio-cdp.dtbo \
                  pineapple-audio-wsa883x-cdp.dtbo \
                  pineapple-audio-cdp-nfc.dtbo \

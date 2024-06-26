@@ -17,7 +17,11 @@ dtbo-$(CONFIG_ARCH_NEO) += display/neo-sde.dtbo \
 endif
 
 ifneq ($(CONFIG_ARCH_QTI_VM), y)
-dtbo-$(CONFIG_ARCH_PINEAPPLE) += display/pineapple-sde.dtbo \
+dtbo-$(CONFIG_ARCH_PINEAPPLE) += display/pineapple-sde.dtbo
+ifeq ($(CONFIG_TARGET_PRODUCT_KIRBY),y)
+dtbo-y += display/kirby-sde-display-qrd-overlay.dtbo
+else
+dtbo-$(CONFIG_ARCH_PINEAPPLE) += \
 		display/pineapple-sde-display-rumi-overlay.dtbo \
 		display/pineapple-sde-display-cdp-overlay.dtbo \
 		display/pineapple-sde-display-rcm-overlay.dtbo \
@@ -28,7 +32,7 @@ dtbo-$(CONFIG_ARCH_PINEAPPLE) += display/pineapple-sde.dtbo \
 		display/pineapple-sde-display-cdp-nfc-overlay.dtbo \
 		display/pineapple-sde-display-mtp-nfc-overlay.dtbo \
 		display/pineapple-sde-display-atp-overlay.dtbo
-else
+endif
 dtbo-$(CONFIG_ARCH_PINEAPPLE) += display/trustedvm-pineapple-sde-display-mtp-overlay.dtbo \
 		  display/trustedvm-pineapple-sde-display-cdp-overlay.dtbo \
 		  display/trustedvm-pineapple-sde-display-rumi-overlay.dtbo \

@@ -16,6 +16,10 @@ ifneq ($(CONFIG_ARCH_QTI_VM), y)
 PINEAPPLE_BASE_DTB += pineapple-v2.dtb pineapple-qcm.dtb
 PINEAPPLE_APQ_BASE_DTB += pineapplep-v2.dtb pineapplep-sg-v2.dtb pineappleq-v2.dtb pineapplep-qcs.dtb
 
+ifeq ($(CONFIG_TARGET_PRODUCT_KIRBY),y)
+dtb-y += kirby-qrd-overlay.dtbo $(PINEAPPLE_BASE_DTB) $(PINEAPPLE_APQ_BASE_DTB)
+else
+
 PINEAPPLE_BOARDS += \
 		 pineapple-mtp-overlay.dtbo \
 		 pineapple-mtp-nfc-overlay.dtbo \
@@ -23,7 +27,6 @@ PINEAPPLE_BOARDS += \
 		 pineapple-cdp-nfc-overlay.dtbo \
 		 pineapple-qrd-overlay.dtbo \
 		 pineapple-qrd-sku2-overlay.dtbo \
-		 kirby-qrd-overlay.dtbo \
 		 pineapple-rcm-overlay.dtbo \
 		 pineapple-atp-overlay.dtbo \
 		 pineapplep-hdk-overlay.dtbo \

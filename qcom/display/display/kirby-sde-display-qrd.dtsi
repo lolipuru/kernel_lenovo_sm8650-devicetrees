@@ -1,0 +1,19 @@
+#include "pineapple-sde-display-qrd.dtsi"
+#include "dsi-panel-kirby-nt36523-csot-dsc-vid.dtsi"
+#include "dsi-panel-kirby-nt36523-boe-dsc-vid.dtsi"
+#include "dsi-panel-kirby-nt36523-boe-dsc-hyper-vid.dtsi"
+
+&sde_dp {
+	qcom,dp-aux-switch = <&fsa4480>;
+};
+
+&sde_dsi {
+	qcom,dsi-default-panel = <&dsi_kirby_nt36523_csot_dsc_vid>;
+};
+
+&battery_charger {
+	qcom,display-panels = <&dsi_kirby_nt36523_csot_dsc_vid>,
+			      <&dsi_kirby_nt36523_boe_dsc_vid>,
+			      <&dsi_kirby_nt36523_boe_dsc_hyper_vid>;
+};
+

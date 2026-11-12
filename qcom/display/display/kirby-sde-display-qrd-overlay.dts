@@ -1,0 +1,12 @@
+/dts-v1/;
+/plugin/;
+
+#include "kirby-sde-display-qrd.dtsi"
+
+/ {
+	model = "Qualcomm Technologies, Inc. Kirby QRD";
+	compatible = "qcom,kirby-qrd", "qcom,kirby", "qcom,qrd";
+	qcom,msm-id = <557 0x20000>, <557 0x10000>, <577 0x20000>, <577 0x10000>;
+	qcom,board-id = <0x3000B 0>;
+};
+

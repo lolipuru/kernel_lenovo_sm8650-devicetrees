@@ -1,0 +1,8 @@
+#include "pineapple-kiwi-cnss.dtsi"
+
+&wlan_kiwi {
+	/delete-property/ vdd-wlan-ant-share-supply;
+	/delete-property/ qcom,vdd-wlan-ant-share-config;
+	qcom,vdd-wlan-rfa1-config = <1856000 1864000 0 0 1>;
+};
+

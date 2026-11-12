@@ -23,6 +23,7 @@ PINEAPPLE_BOARDS += \
 		 pineapple-cdp-nfc-overlay.dtbo \
 		 pineapple-qrd-overlay.dtbo \
 		 pineapple-qrd-sku2-overlay.dtbo \
+		 kirby-qrd-overlay.dtbo \
 		 pineapple-rcm-overlay.dtbo \
 		 pineapple-atp-overlay.dtbo \
 		 pineapplep-hdk-overlay.dtbo \

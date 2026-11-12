@@ -423,7 +423,17 @@
 				<&gpi_dma1 1 6 3 64 0>;
 			dma-names = "tx", "rx";
 			qcom,shared;
-			status = "disabled";
+			status = "ok";
+
+			fsa4480_sub: fsa4480_sub_i2c@42 {
+				compatible = "qcom,fsa4480-sub-i2c";
+				reg = <0x42>;
+			};
+
+			fsa4480: fsa4480_i2c@43 {
+				compatible = "qcom,fsa4480-i2c";
+				reg = <0x43>;
+			};
 		};
 
 		qupv3_se6_spi: spi@a98000 {

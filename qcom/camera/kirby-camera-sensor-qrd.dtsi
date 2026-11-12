@@ -1,0 +1,252 @@
+#include "pineapple-camera-sensor-qrd.dtsi"
+
+&soc {
+	led_flash_macro: qcom,camera-flash2 {
+		cell-index = <2>;
+		compatible = "qcom,camera-flash";
+		flash-source = <&pm8550_flash0 &pm8550_flash3>;
+		torch-source = <&pm8550_torch0 &pm8550_torch3>;
+		switch-source = <&pm8550_switch2>;
+		status = "ok";
+	};
+};
+
+&tlmm {
+	cam_ldo_en_gpio: cam_ldo_en_gpio {
+		mux {
+			pins = "gpio126";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio126";
+			bias-disable;
+			output-high;
+		};
+	};
+
+	cam_sensor_active_rst0: cam_sensor_active_rst0 {
+		mux {
+			pins = "gpio11";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio11";
+			bias-disable;
+			drive-strength = <2>;
+		};
+	};
+
+	cam_sensor_suspend_rst0: cam_sensor_suspend_rst0 {
+		mux {
+			pins = "gpio11";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio11";
+			bias-pull-down;
+			drive-strength = <2>;
+			output-low;
+		};
+	};
+
+	cam_sensor_active_rst1: cam_sensor_active_rst1 {
+		mux {
+			pins = "gpio109";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio109";
+			bias-disable;
+			drive-strength = <2>;
+		};
+	};
+
+	cam_sensor_suspend_rst1: cam_sensor_suspend_rst1 {
+		mux {
+			pins = "gpio109";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio109";
+			bias-pull-down;
+			drive-strength = <2>;
+			output-low;
+		};
+	};
+
+	cam_sensor_active_rst2: cam_sensor_active_rst2 {
+		mux {
+			pins = "gpio15";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio15";
+			bias-disable;
+			drive-strength = <2>;
+			qcom,apps;
+		};
+	};
+
+	cam_sensor_suspend_rst2: cam_sensor_suspend_rst2 {
+		mux {
+			pins = "gpio15";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio15";
+			bias-pull-down;
+			drive-strength = <2>;
+			output-low;
+			qcom,remote;
+		};
+	};
+};
+
+&qupv3_se10_i2c {
+	wl2868c@2F {
+		compatible = "lenovo,wl2868c";
+		reg = <0x2f>;
+		vin1-supply = <&S6C>;
+		vin1-voltage-level = <1856000 1856000>;
+		vin2-supply = <&BOB1>;
+		vin2-voltage-level = <3296000 3296000>;
+		vin3-supply = <&L10B>;
+		vin3-voltage-level = <1800000 1800000>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&cam_ldo_en_gpio>;
+		status = "ok";
+	};
+
+	et5907@35 {
+		compatible = "lenovo,et5907";
+		reg = <0x35>;
+		vin1-supply = <&S6C>;
+		vin1-voltage-level = <1856000 1856000>;
+		vin2-supply = <&BOB1>;
+		vin2-voltage-level = <3296000 3296000>;
+		vin3-supply = <&L10B>;
+		vin3-voltage-level = <1800000 1800000>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&cam_ldo_en_gpio>;
+		status = "ok";
+	};
+};
+
+&cam_cci0 {
+	eeprom_main: qcom,eeprom0 {
+		cell-index = <0>;
+		compatible = "qcom,eeprom";
+		cam_clk-supply = <&cam_cc_titan_top_gdsc>;
+		regulator-names = "cam_clk";
+		rgltr-cntrl-support;
+		rgltr-min-voltage = <0>;
+		rgltr-max-voltage = <0>;
+		rgltr-load-current = <0>;
+		gpio-no-mux = <0>;
+		pinctrl-names = "cam_default", "cam_suspend";
+		pinctrl-0 = <&cam_sensor_mclk0_active &cam_sensor_active_rst0>;
+		pinctrl-1 = <&cam_sensor_mclk0_suspend &cam_sensor_suspend_rst0>;
+		gpios = <&tlmm 100 0>,
+			<&tlmm 11 0>;
+		gpio-reset = <1>;
+		gpio-req-tbl-num = <0 1>;
+		gpio-req-tbl-flags = <1 0>;
+		gpio-req-tbl-label = "CAMIF_MCLK0", "CAM_RESET0";
+		cci-master = <CCI_MASTER_0>;
+		clocks = <&camcc CAM_CC_MCLK0_CLK>;
+		clock-names = "cam_clk";
+		clock-cntl-level = "turbo";
+		clock-rates = <19200000>;
+		status = "ok";
+	};
+
+	eeprom_macro: qcom,eeprom2 {
+		cell-index = <2>;
+		compatible = "qcom,eeprom";
+		cam_clk-supply = <&cam_cc_titan_top_gdsc>;
+		regulator-names = "cam_clk";
+		rgltr-cntrl-support;
+		rgltr-min-voltage = <0>;
+		rgltr-max-voltage = <0>;
+		rgltr-load-current = <0>;
+		gpio-no-mux = <0>;
+		pinctrl-names = "cam_default", "cam_suspend";
+		pinctrl-0 = <&cam_sensor_mclk1_active &cam_sensor_active_rst2>;
+		pinctrl-1 = <&cam_sensor_mclk1_suspend &cam_sensor_suspend_rst2>;
+		gpios = <&tlmm 101 0>,
+			<&tlmm 15 0>;
+		gpio-reset = <1>;
+		gpio-req-tbl-num = <0 1>;
+		gpio-req-tbl-flags = <1 0>;
+		gpio-req-tbl-label = "CAMIF_MCLK1", "CAM_RESET2";
+		cci-master = <CCI_MASTER_1>;
+		clocks = <&camcc CAM_CC_MCLK1_CLK>;
+		clock-names = "cam_clk";
+		clock-cntl-level = "turbo";
+		clock-rates = <19200000>;
+		status = "ok";
+	};
+
+	qcom,cam-sensor0 {
+		eeprom-src = <&eeprom_main>;
+	};
+
+	qcom,cam-sensor2 {
+		led-flash-src = <&led_flash_macro>;
+		eeprom-src = <&eeprom_macro>;
+	};
+};
+
+&cam_cci1 {
+	eeprom_front: qcom,eeprom1 {
+		cell-index = <1>;
+		compatible = "qcom,eeprom";
+		cam_clk-supply = <&cam_cc_titan_top_gdsc>;
+		regulator-names = "cam_clk";
+		rgltr-cntrl-support;
+		rgltr-min-voltage = <0>;
+		rgltr-max-voltage = <0>;
+		rgltr-load-current = <0>;
+		gpio-no-mux = <0>;
+		pinctrl-names = "cam_default", "cam_suspend";
+		pinctrl-0 = <&cam_sensor_mclk3_active &cam_sensor_active_rst1>;
+		pinctrl-1 = <&cam_sensor_mclk3_suspend &cam_sensor_suspend_rst1>;
+		gpios = <&tlmm 103 0>,
+			<&tlmm 109 0>;
+		gpio-reset = <1>;
+		gpio-req-tbl-num = <0 1>;
+		gpio-req-tbl-flags = <1 0>;
+		gpio-req-tbl-label = "CAMIF_MCLK3", "CAM_RESET1";
+		cci-master = <CCI_MASTER_0>;
+		clocks = <&camcc CAM_CC_MCLK3_CLK>;
+		clock-names = "cam_clk";
+		clock-cntl-level = "turbo";
+		clock-rates = <19200000>;
+		status = "ok";
+	};
+
+	qcom,cam-sensor1 {
+		eeprom-src = <&eeprom_front>;
+	};
+
+	wl2868c@2F {
+		compatible = "lenovo,wl2868c";
+		reg = <0x2f>;
+		vin1-supply = <&S6C>;
+		vin1-voltage-level = <1856000 1856000>;
+		vin2-supply = <&BOB1>;
+		vin2-voltage-level = <3296000 3296000>;
+		vin3-supply = <&L10B>;
+		vin3-voltage-level = <1800000 1800000>;
+		en-gpio = <&tlmm 126 0>;
+		status = "ok";
+	};
+};
+
